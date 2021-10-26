@@ -11,7 +11,7 @@
   - name: take cert from letsencrypt
     include_tasks: "{{ ansible_os_family }}.yml"
 
-  - name: copy the new 443 nginx vhotsts config file on ubuntu
+  - name: copy the new 443 nginx vhotsts config file
     template:
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
