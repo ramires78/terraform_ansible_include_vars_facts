@@ -1,0 +1,32 @@
+  - name: added Facts Ubuntu
+    set_fact:
+      my_vhosts_new: denisdebian.devops.rebrain.srwx.net
+    when: ansible_os_family == "Debian"
+
+  - name: added Facts RedHat
+    set_fact:    
+      my_vhosts_new: denisredhat.devops.rebrain.srwx.net
+    when: ansible_os_family == "RedHat"    
+
+  - name: take cert from letsencrypt
+    include_tasks: "{{ ansible_os_family }}.yml"
+
+  - name: copy the new 443 nginx vhotsts config file on ubuntu
+    template:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      mode: "{{ item.mode }}"
+    with_items:
+      - "{{ virtualconf_new }}"            
+    tags:
+      - new_hosts
+    notify: 
+      - reload nginx  
+
+  - name: Creation of DH (Diffie Hellman) certificate
+    shell:
+      cmd: "openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048"
+    tags:
+      hellman
+    notify: 
+      - reload nginx
