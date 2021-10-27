@@ -22,9 +22,7 @@ Roles allow you to put together a playbook for different tasks from smaller part
 ```
 
 ```shell
-     
-     ansible-playbook -i ./ansible/inventories/webservers/hosts.yml ./ansible/nginx.yml --list-task  
-     
+     ansible-playbook -i ./ansible/inventories/webservers/hosts.yml ./ansible/nginx.yml --list-task       
 ```
   
   play #1 (all): all  TAGS: []  
